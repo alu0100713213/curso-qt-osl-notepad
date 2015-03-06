@@ -63,6 +63,17 @@ NotepadWindow::NotepadWindow(QWidget *parent)
     mnuAyuda_->addAction(actAyudaAcerca_);
     mainMenu_->addMenu(mnuAyuda_);
 
+    // Extra Function
+
+    actBold_ = new QAction(tr("&Negrita"), this);
+    actBold_->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_B));
+
+    actUnder_ = new QAction(tr("&Subrayar"), this);
+    actUnder_->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_U));
+
+    actItalic_= new QAction(tr("&Italic"), this);
+    actItalic_->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_I));
+
     // Toolbar
 
     toolbar_ = new QToolBar();
@@ -73,12 +84,15 @@ NotepadWindow::NotepadWindow(QWidget *parent)
     toolbar_->addAction(actEditarCopiar_);
     toolbar_->addAction(actEditarPegar_);
     toolbar_->addAction(actEditarCortar_);
+    toolbar_->addAction(actBold_);
+    toolbar_->addAction(actUnder_);
+    toolbar_->addAction(actItalic_);
     addToolBar(toolbar_);
     //Agregamos la barra de menú a la ventana
     this->setMenuBar(mainMenu_);
 
     //Inicializamos el editor de texto
-    txtEditor_ = new QPlainTextEdit(this);
+    txtEditor_ = new QTextEdit(this);
 
     //Conectamos las acciones de los menús con nuestros slots
     connect(actArchivoAbrir_,   SIGNAL(triggered()), this,          SLOT(alAbrir()));
@@ -90,6 +104,9 @@ NotepadWindow::NotepadWindow(QWidget *parent)
     connect(actEditarCortar_, SIGNAL(triggered()), txtEditor_, SLOT(cut()));
     connect(actEditarDeshacer_, SIGNAL(triggered()), txtEditor_, SLOT(undo()));
     connect(actEditarRehacer_, SIGNAL(triggered()), txtEditor_, SLOT(redo()));
+    connect(actUnder_, SIGNAL(triggered()), txtEditor_, SLOT(textUnderline()));
+    connect(actBold_, SIGNAL(triggered()), txtEditor_, SLOT(textBold()));
+    connect(actItalic_, SIGNAL(triggered()), txtEditor_, SLOT(textItalic()));
 
     //Agregamos el editor de texto a la ventana
     this->setCentralWidget(txtEditor_);
@@ -160,4 +177,34 @@ void NotepadWindow::alFuente()
         // Si el usuario hizo click en OK, se establece la fuente seleccionada
         txtEditor_->setFont(font);
     }
+}
+
+void NotepadWindow::textBold()
+{
+    QFont* mifuente = new QFont ();
+    if(txtEditor_->currentFont().bold())
+        mifuente->setBold(false);
+    else
+        mifuente->setBold(true);
+    txtEditor_->setCurrentFont(*mifuente);
+}
+
+void NotepadWindow::textItalic()
+{
+    QFont* mifuente = new QFont ();
+    if(txtEditor_->currentFont().italic())
+        mifuente->setItalic(false);
+    else
+        mifuente->setItalic(true);
+    txtEditor_->setCurrentFont(*mifuente);
+}
+
+void NotepadWindow::textUnderline()
+{
+    QFont* mifuente = new QFont ();
+    if(txtEditor_->currentFont().underline())
+        mifuente->setUnderline(false);
+    else
+        mifuente->setUnderline(true);
+    txtEditor_->setCurrentFont(*mifuente);
 }

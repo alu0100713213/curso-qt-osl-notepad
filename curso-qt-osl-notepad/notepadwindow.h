@@ -3,16 +3,20 @@
 
 #include <QMainWindow>
 //Incluimos librerias necesarias
-#include <QToolBar>
 #include <QMenuBar>
 #include <QMenu>
 #include <QAction>
-#include <QPlainTextEdit>
-#include <QFileDialog>
-#include <QFile>
+#include <QTextEdit> // Si queremos dar controlador de sintaxis , hay que usar TextEdit.
+#include <QFileDialog> // Ventana para nombrar, elegir .
+#include <QFile> // Abrir ficheros, leerlos y escribirlos.
 #include <QFontDialog>
 #include <QClipboard>
-#include <QKeySequence>
+#include <QKeySequence> // Accesos directos.
+#include <QToolBar>
+#include <QMessageBox>
+#include <QDebug>
+#include <QFont>
+#include <QJsonDocument>
 
 class NotepadWindow : public QMainWindow
 {
@@ -26,6 +30,9 @@ private slots:
     void alAbrir();
     void alGuardar();
     void alFuente();
+    void textBold();
+    void textItalic();
+    void textUnderline();
 
 private:
     QMenuBar*       mainMenu_;
@@ -41,9 +48,12 @@ private:
     QAction*        actEditarCortar_;
     QAction*        actEditarDeshacer_;
     QAction*        actEditarRehacer_;
+    QAction*        actBold_;
+    QAction*        actUnder_;
+    QAction*        actItalic_;
     QMenu*          mnuAyuda_;
     QAction*        actAyudaAcerca_;
-    QPlainTextEdit* txtEditor_;
+    QTextEdit* txtEditor_;
     QClipboard *    portapapeles_;
     QToolBar*       toolbar_;
 
