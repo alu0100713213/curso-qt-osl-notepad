@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 //Incluimos librerias necesarias
+#include <QToolBar>
 #include <QMenuBar>
 #include <QMenu>
 #include <QAction>
@@ -36,8 +37,15 @@ private:
     QMenu*          mnuEditar_;
     QAction*        actEditarCopiar_;
     QAction*        actEditarPegar_;
+    QAction*        actArchivoSalir_;
+    QAction*        actEditarCortar_;
+    QAction*        actEditarDeshacer_;
+    QAction*        actEditarRehacer_;
+    QMenu*          mnuAyuda_;
+    QAction*        actAyudaAcerca_;
     QPlainTextEdit* txtEditor_;
     QClipboard *    portapapeles_;
+    QToolBar*       toolbar_;
 
 };
 

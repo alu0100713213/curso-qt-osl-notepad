@@ -34,12 +34,46 @@ NotepadWindow::NotepadWindow(QWidget *parent)
     actEditarPegar_->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_V));
     mnuEditar_->addAction(actEditarPegar_);
 
+    actArchivoSalir_ = new QAction(tr("&Salir"), this);
+    actArchivoSalir_->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
+    mnuArchivo_->addAction(actArchivoSalir_);
+
+    actEditarCortar_ = new QAction(tr("&Cortar"), this);
+    actEditarCortar_->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_X));
+    mnuEditar_->addAction(actEditarCortar_);
+
+    actEditarDeshacer_ = new QAction(tr("&Deshacer"), this);
+    actEditarDeshacer_->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z));
+    mnuEditar_->addAction(actEditarDeshacer_);
+
+    actEditarRehacer_ = new QAction(tr("&Rehacer"), this);
+    actEditarRehacer_->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Y));
+    mnuEditar_->addAction(actEditarRehacer_);
+
     mnuFormato_ = new QMenu(tr("&Formato"), this);
     mainMenu_->addMenu(mnuFormato_);
 
     actFormatoFuente_ = new QAction(tr("&Fuente"), this);
     mnuFormato_->addAction(actFormatoFuente_);
 
+    actAyudaAcerca_ = new QAction(tr("&Acerca"), this);
+    actAyudaAcerca_->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_H));
+
+    mnuAyuda_ = new QMenu(tr("&Ayuda"), this);
+    mnuAyuda_->addAction(actAyudaAcerca_);
+    mainMenu_->addMenu(mnuAyuda_);
+
+    // Toolbar
+
+    toolbar_ = new QToolBar();
+    toolbar_->addAction(actArchivoAbrir_);
+    toolbar_->addAction(actArchivoGuardar_);
+    toolbar_->addAction(actEditarDeshacer_);
+    toolbar_->addAction(actEditarRehacer_);
+    toolbar_->addAction(actEditarCopiar_);
+    toolbar_->addAction(actEditarPegar_);
+    toolbar_->addAction(actEditarCortar_);
+    addToolBar(toolbar_);
     //Agregamos la barra de menú a la ventana
     this->setMenuBar(mainMenu_);
 
@@ -52,6 +86,10 @@ NotepadWindow::NotepadWindow(QWidget *parent)
     connect(actEditarCopiar_,   SIGNAL(triggered()), txtEditor_,    SLOT(copy()));
     connect(actEditarPegar_,    SIGNAL(triggered()), txtEditor_,    SLOT(paste()));
     connect(actFormatoFuente_,  SIGNAL(triggered()), this,          SLOT(alFuente()));
+    connect(actArchivoSalir_, SIGNAL(triggered()), this, SLOT(close()));
+    connect(actEditarCortar_, SIGNAL(triggered()), txtEditor_, SLOT(cut()));
+    connect(actEditarDeshacer_, SIGNAL(triggered()), txtEditor_, SLOT(undo()));
+    connect(actEditarRehacer_, SIGNAL(triggered()), txtEditor_, SLOT(redo()));
 
     //Agregamos el editor de texto a la ventana
     this->setCentralWidget(txtEditor_);
